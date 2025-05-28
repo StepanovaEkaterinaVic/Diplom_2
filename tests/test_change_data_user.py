@@ -1,5 +1,7 @@
 import allure
 import pytest
+
+from data import Message
 from methods.user_methods import UserMethods
 from generators import generate_user_body, parametrize_new_values
 
@@ -28,7 +30,7 @@ class TestChangeDataUser:
         change_response = UserMethods.change_data_user(change_email_data, token)
         assert change_response.status_code == 403
         assert change_response.json().get("success") is False
-        assert change_response.json().get("message") == 'User with such email already exists'
+        assert change_response.json().get("message") == Message.EMAIL_EXIST
 
     @allure.title('Проверка получения ошибки при данных не зарегистрированного пользователя')
     @allure.description('Проверка кода ответа и тела ответа')
@@ -40,4 +42,4 @@ class TestChangeDataUser:
         change_response = UserMethods.change_data_user({field: new_value}, None)
         assert change_response.status_code == 401
         assert change_response.json().get("success") is False
-        assert change_response.json().get("message") == 'You should be authorised'
+        assert change_response.json().get("message") == Message.NEED_AUTHORIZATION

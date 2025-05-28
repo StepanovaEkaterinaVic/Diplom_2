@@ -1,4 +1,6 @@
 import allure
+
+from data import Message
 from methods.user_methods import UserMethods
 
 
@@ -17,7 +19,7 @@ class TestCreateUser:
         response = UserMethods.create_user(generate_user_data[0])
         assert response.status_code == 403
         assert response.json().get("success") is False
-        assert response.json().get("message") == 'User already exists'
+        assert response.json().get("message") == Message.USER_EXIST
 
     @allure.title('Проверка получения ошибки при отсутствии name при регистрации пользователя')
     @allure.description('Проверка кода ответа и тела ответа')
@@ -25,7 +27,7 @@ class TestCreateUser:
         response = UserMethods.create_user(generate_user_data[:-1])
         assert response.status_code == 403
         assert response.json().get("success") is False
-        assert response.json().get("message") == 'Email, password and name are required fields'
+        assert response.json().get("message") == Message.REQUIRED_FIELDS
 
     @allure.title('Проверка получения ошибки при отсутствии email при регистрации пользователя')
     @allure.description('Проверка кода ответа и тела ответа')
@@ -33,7 +35,7 @@ class TestCreateUser:
         response = UserMethods.create_user([generate_user_data[0], generate_user_data[2:4]])
         assert response.status_code == 403
         assert response.json().get("success") is False
-        assert response.json().get("message") == 'Email, password and name are required fields'
+        assert response.json().get("message") == Message.REQUIRED_FIELDS
 
     @allure.title('Проверка получения ошибки при отсутствии password при регистрации пользователя')
     @allure.description('Проверка кода ответа и тела ответа')
@@ -41,7 +43,7 @@ class TestCreateUser:
         response = UserMethods.create_user([generate_user_data[0:2], generate_user_data[3]])
         assert response.status_code == 403
         assert response.json().get("success") is False
-        assert response.json().get("message") == 'Email, password and name are required fields'
+        assert response.json().get("message") == Message.REQUIRED_FIELDS
 
 
 

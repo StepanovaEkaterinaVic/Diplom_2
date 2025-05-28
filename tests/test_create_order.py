@@ -1,5 +1,6 @@
 import allure
 import generators
+from data import Message
 
 from methods.order_methods import OrderMethods
 from methods.user_methods import UserMethods
@@ -30,7 +31,7 @@ class TestCreateOrder:
         order = OrderMethods.create_order(access_token, {"ingredients": None})
         assert order.status_code == 400
         assert order.json().get("success") is False
-        assert order.json().get("message") == 'Ingredient ids must be provided'
+        assert order.json().get("message") == Message.NEED_IDS_INGREDIENTS
 
     @allure.title('Проверка получения ошибки при создании заказа с неверным хэшем зарегистрированным пользователем')
     @allure.description('Проверка кода ответа и тела ответа')
@@ -40,5 +41,5 @@ class TestCreateOrder:
         order = OrderMethods.create_order(access_token, {"ingredients": generators.generate_invalid_hash()})
         assert order.status_code == 400
         assert order.json().get("success") is False
-        assert order.json().get("message") == 'Ingredient ids must be provided'
+        assert order.json().get("message") == Message.NEED_IDS_INGREDIENTS
 

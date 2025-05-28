@@ -1,5 +1,6 @@
 import allure
 import generators
+from data import Message
 
 from methods.order_methods import OrderMethods
 from methods.user_methods import UserMethods
@@ -23,4 +24,4 @@ class TestGetOrder:
         orders = OrderMethods.get_user_orders(None)
         assert orders.status_code == 401
         assert orders.json().get("success") is False
-        assert orders.json().get("message") == 'You should be authorised'
+        assert orders.json().get("message") == Message.NEED_AUTHORIZATION

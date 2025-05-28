@@ -17,3 +17,11 @@ class DataOrder:
         "Сыр с астероидной плесенью": "61c0c5a71d1f82001bdaaa7a",
     }
 
+class Message:
+    EMAIL_EXIST = 'User with such email already exists'
+    NEED_AUTHORIZATION = 'You should be authorised'
+    NEED_IDS_INGREDIENTS = 'Ingredient ids must be provided'
+    USER_EXIST = 'User already exists'
+    REQUIRED_FIELDS = 'Email, password and name are required fields'
+    INCORRECT_INPUT = 'email or password are incorrect'
+
